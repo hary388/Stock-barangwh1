@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stok Barang</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #f0f0f0; }
+    input, select { padding: 6px; margin: 4px; }
+  </style>
+</head>
+<body>
+  <h2>Stok Barang</h2>
+
+  <form id="stokForm">
+    <input type="text" id="kode" placeholder="Kode Barang" required />
+    <input type="text" id="nama" placeholder="Nama Barang" required />
+    <input type="text" id="kategori" placeholder="Kategori" />
+    <input type="number" id="masuk" placeholder="Stok Masuk" required />
+    <input type="number" id="keluar" placeholder="Stok Keluar" required />
+    <input type="text" id="satuan" placeholder="Satuan" />
+    <input type="text" id="lokasi" placeholder="Lokasi Gudang" />
+    <button type="submit">Tambah</button>
+  </form>
+
+  <table id="stokTable">
+    <thead>
+      <tr>
+        <th>Kode</th>
+        <th>Nama</th>
+        <th>Kategori</th>
+        <th>Masuk</th>
+        <th>Keluar</th>
+        <th>Stok Akhir</th>
+        <th>Satuan</th>
+        <th>Lokasi</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const form = document.getElementById('stokForm');
+    const table = document.querySelector('#stokTable tbody');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const kode = document.getElementById('kode').value;
+      const nama = document.getElementById('nama').value;
+      const kategori = document.getElementById('kategori').value;
+      const masuk = parseInt(document.getElementById('masuk').value);
+      const keluar = parseInt(document.getElementById('keluar').value);
+      const satuan = document.getElementById('satuan').value;
+      const lokasi = document.getElementById('lokasi').value;
+
+      const akhir = masuk - keluar;
+      const tanggal = new Date().toISOString().split('T')[0];
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${kode}</td>
+        <td>${nama}</td>
+        <td>${kategori}</td>
+        <td>${masuk}</td>
+        <td>${keluar}</td>
+        <td>${akhir}</td>
+        <td>${satuan}</td>
+        <td>${lokasi}</td>
+        <td>${tanggal}</td>
+      `;
+      table.appendChild(row);
+
+      form.reset();
+    });
+  </script>
+</body>
+</html>
